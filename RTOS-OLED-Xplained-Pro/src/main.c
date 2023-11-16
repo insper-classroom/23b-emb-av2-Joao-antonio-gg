@@ -78,13 +78,13 @@ extern void vApplicationMallocFailedHook(void) {
 
 void but1_callback(void) {
 	/*printf("1 \n");*/
-	int but1_flag = 0;
+	
 	char id = '1';
 	if (pio_get(BUT_1_PIO, PIO_INPUT, BUT_1_IDX_MASK)) {
 		// PINO == 1 --> Borda de subida
 		} else {
 		xQueueSendFromISR(xQueueEvent, &id, 0);// PINO == 0 --> Borda de descida
-		but1_flag = 1;
+		
 	}
 	
 }
@@ -92,25 +92,24 @@ void but1_callback(void) {
 void but2_callback(void) {
 	/*printf("2 \n");*/
 	char id = '2';
-	int but2_flag = 0;
+	
 	
 	if (pio_get(BUT_2_PIO, PIO_INPUT, BUT_2_IDX_MASK)) {
 		// PINO == 1 --> Borda de subida
 		} else {
 		xQueueSendFromISR(xQueueEvent, &id, 0);// PINO == 0 --> Borda de descida
-		but2_flag = 1;
 	}
 }
 
 void but3_callback(void) {
 	/*printf("3 \n");*/
 	char id = '3';
-	int but3_flag = 0;
+	
 	if (pio_get(BUT_3_PIO, PIO_INPUT, BUT_3_IDX_MASK)) {
 		// PINO == 1 --> Borda de subida
 		} else {
 		xQueueSendFromISR(xQueueEvent, &id, 0);// PINO == 0 --> Borda de descida
-		but3_flag = 1;
+		
 	}
 }
 

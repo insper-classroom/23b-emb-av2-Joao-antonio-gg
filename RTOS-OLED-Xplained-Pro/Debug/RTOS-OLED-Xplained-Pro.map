@@ -13766,7 +13766,7 @@ OUTPUT(RTOS-OLED-Xplained-Pro.elf elf32-littlearm)
  .comment       0x00000059       0x5a src/ASF/thirdparty/freertos/freertos-8.2.3/Source/timers.o
  .comment       0x00000059       0x5a src/main.o
 
-.debug_info     0x00000000    0x265fe
+.debug_info     0x00000000    0x265ef
  .debug_info    0x00000000     0x2456 src/ASF/sam/drivers/afec/afec.o
  .debug_info    0x00002456     0x115d src/ASF/sam/drivers/spi/spi.o
  .debug_info    0x000035b3      0xe4f src/oled/gfx_mono_framebuffer.o
@@ -13793,7 +13793,7 @@ OUTPUT(RTOS-OLED-Xplained-Pro.elf elf32-littlearm)
  .debug_info    0x0001c64b     0x26ec src/ASF/thirdparty/freertos/freertos-8.2.3/Source/queue.o
  .debug_info    0x0001ed37     0x34b4 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
  .debug_info    0x000221eb     0x1b3e src/ASF/thirdparty/freertos/freertos-8.2.3/Source/timers.o
- .debug_info    0x00023d29     0x28d5 src/main.o
+ .debug_info    0x00023d29     0x28c6 src/main.o
 
 .debug_abbrev   0x00000000     0x51c4
  .debug_abbrev  0x00000000      0x4d7 src/ASF/sam/drivers/afec/afec.o
@@ -13824,7 +13824,7 @@ OUTPUT(RTOS-OLED-Xplained-Pro.elf elf32-littlearm)
  .debug_abbrev  0x000049c9      0x3ce src/ASF/thirdparty/freertos/freertos-8.2.3/Source/timers.o
  .debug_abbrev  0x00004d97      0x42d src/main.o
 
-.debug_loc      0x00000000     0xb624
+.debug_loc      0x00000000     0xb5f8
  .debug_loc     0x00000000      0xa8b src/ASF/sam/drivers/afec/afec.o
  .debug_loc     0x00000a8b      0x610 src/ASF/sam/drivers/spi/spi.o
  .debug_loc     0x0000109b      0x506 src/oled/gfx_mono_framebuffer.o
@@ -13848,7 +13848,7 @@ OUTPUT(RTOS-OLED-Xplained-Pro.elf elf32-littlearm)
  .debug_loc     0x00006a1b     0x173f src/ASF/thirdparty/freertos/freertos-8.2.3/Source/queue.o
  .debug_loc     0x0000815a     0x20bd src/ASF/thirdparty/freertos/freertos-8.2.3/Source/tasks.o
  .debug_loc     0x0000a217      0xd26 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/timers.o
- .debug_loc     0x0000af3d      0x6e7 src/main.o
+ .debug_loc     0x0000af3d      0x6bb src/main.o
 
 .debug_aranges  0x00000000     0x10a8
  .debug_aranges
@@ -14052,7 +14052,7 @@ OUTPUT(RTOS-OLED-Xplained-Pro.elf elf32-littlearm)
  .debug_line    0x000149a2      0xdaf src/ASF/thirdparty/freertos/freertos-8.2.3/Source/timers.o
  .debug_line    0x00015751     0x12e8 src/main.o
 
-.debug_str      0x00000000    0x96fb3
+.debug_str      0x00000000    0x96fa9
  .debug_str     0x00000000    0x86e32 src/ASF/sam/drivers/afec/afec.o
                               0x875fe (size before relaxing)
  .debug_str     0x00086e32      0x3fc src/ASF/sam/drivers/spi/spi.o
@@ -14105,8 +14105,8 @@ OUTPUT(RTOS-OLED-Xplained-Pro.elf elf32-littlearm)
                               0x8acaf (size before relaxing)
  .debug_str     0x0009568b      0x483 src/ASF/thirdparty/freertos/freertos-8.2.3/Source/timers.o
                               0x8a736 (size before relaxing)
- .debug_str     0x00095b0e     0x14a5 src/main.o
-                              0x90768 (size before relaxing)
+ .debug_str     0x00095b0e     0x149b src/main.o
+                              0x9075e (size before relaxing)
 
 .debug_frame    0x00000000     0x352c
  .debug_frame   0x00000000      0x1f0 src/ASF/sam/drivers/afec/afec.o
