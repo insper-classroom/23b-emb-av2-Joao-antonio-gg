@@ -81,10 +81,12 @@ void but1_callback(void) {
 	
 	char id = '1';
 	if (pio_get(BUT_1_PIO, PIO_INPUT, BUT_1_IDX_MASK)) {
+		xQueueSendFromISR(xQueueEvent, &id, 0);
 		// PINO == 1 --> Borda de subida
-		} else {
-		xQueueSendFromISR(xQueueEvent, &id, 0);// PINO == 0 --> Borda de descida
+		} 
+	else {
 		
+		xQueueSendFromISR(xQueueEvent, &id, 0);// PINO == 0 --> Borda de descida
 	}
 	
 }
@@ -107,10 +109,14 @@ void but3_callback(void) {
 	
 	if (pio_get(BUT_3_PIO, PIO_INPUT, BUT_3_IDX_MASK)) {
 		// PINO == 1 --> Borda de subida
-		} else {
+		xQueueSendFromISR(xQueueEvent, &id, 0);
+		}
+		 
+	else {
 		xQueueSendFromISR(xQueueEvent, &id, 0);// PINO == 0 --> Borda de descida
 		
 	}
+	
 }
 
 /************************************************************************/
@@ -119,12 +125,17 @@ void but3_callback(void) {
 
 static void task_event(void *pvParameters){
 	char id;
-	
+	int flag1 = 0;
 	for (;;){
 		
 		if( xQueueReceive( xQueueEvent, &id, ( TickType_t ) 500 )){
-			if (id == '1'){
+			if (id == '1' && flag1 == 0 ){
 				printf("precionado but 1 \n");
+				flag1 = 1;
+			}
+			else if (id == '1' && flag1 == 1 ){
+				printf("botao 1 solto \n");
+				flag1 = 0;
 			}
 			
 			if (id == '2'){
@@ -139,7 +150,6 @@ static void task_event(void *pvParameters){
 			
 			
 			
-			vTaskDelay(500);
 			
 		}
 	}
