@@ -46,6 +46,10 @@ extern void vApplicationTickHook(void);
 extern void vApplicationMallocFailedHook(void);
 extern void xPortSysTickHandler(void);
 
+// fila
+QueueHandle_t xQueueEvent;
+
+
 /************************************************************************/
 /* prototypes                                                           */
 /************************************************************************/
@@ -73,20 +77,75 @@ extern void vApplicationMallocFailedHook(void) {
 /************************************************************************/
 
 void but1_callback(void) {
-	printf("1 \n");
+	/*printf("1 \n");*/
+	int but1_flag = 0;
+	char id = '1';
+	if (pio_get(BUT_1_PIO, PIO_INPUT, BUT_1_IDX_MASK)) {
+		// PINO == 1 --> Borda de subida
+		} else {
+		xQueueSendFromISR(xQueueEvent, &id, 0);// PINO == 0 --> Borda de descida
+		but1_flag = 1;
+	}
+	
 }
 
 void but2_callback(void) {
-	printf("2 \n");
+	/*printf("2 \n");*/
+	char id = '2';
+	int but2_flag = 0;
+	
+	if (pio_get(BUT_2_PIO, PIO_INPUT, BUT_2_IDX_MASK)) {
+		// PINO == 1 --> Borda de subida
+		} else {
+		xQueueSendFromISR(xQueueEvent, &id, 0);// PINO == 0 --> Borda de descida
+		but2_flag = 1;
+	}
 }
 
 void but3_callback(void) {
-	printf("3 \n");
+	/*printf("3 \n");*/
+	char id = '3';
+	int but3_flag = 0;
+	if (pio_get(BUT_3_PIO, PIO_INPUT, BUT_3_IDX_MASK)) {
+		// PINO == 1 --> Borda de subida
+		} else {
+		xQueueSendFromISR(xQueueEvent, &id, 0);// PINO == 0 --> Borda de descida
+		but3_flag = 1;
+	}
 }
 
 /************************************************************************/
 /* TASKS                                                                */
 /************************************************************************/
+
+static void task_event(void *pvParameters){
+	char id;
+	
+	for (;;){
+		
+		if( xQueueReceive( xQueueEvent, &id, ( TickType_t ) 500 )){
+			if (id == '1'){
+				printf("precionado but 1 \n");
+			}
+			
+			if (id == '2'){
+				/*printf("opa 2 \n");*/
+				printf("precionado but 2 \n");
+			}
+			
+			if (id == '3'){
+				/*printf("opa 3 \n");*/
+				printf("precionado but 3 \n");
+			}
+			
+			
+			
+			vTaskDelay(500);
+			
+		}
+	}
+		
+}
 
 static void task_oled(void *pvParameters) {
 	gfx_mono_ssd1306_init();
@@ -129,11 +188,11 @@ void io_init(void) {
 	pio_configure(LED_3_PIO, PIO_OUTPUT_0, LED_3_IDX_MASK, PIO_DEFAULT);
 
 	pio_configure(BUT_1_PIO, PIO_INPUT, BUT_1_IDX_MASK,
-	PIO_PULLUP | PIO_DEBOUNCE);
+	PIO_PULLUP | PIO_DEBOUNCE | PIO_IT_FALL_EDGE);
 	pio_configure(BUT_2_PIO, PIO_INPUT, BUT_2_IDX_MASK,
-	PIO_PULLUP | PIO_DEBOUNCE);
+	PIO_PULLUP | PIO_DEBOUNCE | PIO_IT_FALL_EDGE);
 	pio_configure(BUT_3_PIO, PIO_INPUT, BUT_3_IDX_MASK,
-	PIO_PULLUP | PIO_DEBOUNCE);
+	PIO_PULLUP | PIO_DEBOUNCE | PIO_IT_FALL_EDGE);
 
 	pio_handler_set(BUT_1_PIO, BUT_1_PIO_ID, BUT_1_IDX_MASK, PIO_IT_EDGE,
 	but1_callback);
@@ -171,11 +230,19 @@ int main(void) {
 	board_init();
 	configure_console();
 	io_init();
+	xQueueEvent = xQueueCreate(32, sizeof(char) );
 
 	if (xTaskCreate(task_oled, "oled", TASK_OLED_STACK_SIZE, NULL, TASK_OLED_STACK_PRIORITY, NULL) != pdPASS) {
 		printf("Failed to create oled task\r\n");
 	}
-
+	
+	if (xQueueEvent == NULL)
+	printf("falha em criar a fila \n");
+	
+	if (xTaskCreate(task_event, "event", TASK_OLED_STACK_SIZE, NULL, TASK_OLED_STACK_PRIORITY, NULL) != pdPASS) {
+		printf("Failed to create event task\r\n");
+	}
+	
 	vTaskStartScheduler();
 	while(1){}
 
